@@ -39,6 +39,11 @@ module React
         # remove internally used properties so they aren't rendered to DOM
         html_options.except!(:tag, :prerender)
 
+        # Remove any unneeded tags for static content
+        if prerender_options == :static
+          html_options[:data].except!(:react_class, :react_props)
+        end
+
         content_tag(html_tag, '', html_options, &block)
       end
     end
